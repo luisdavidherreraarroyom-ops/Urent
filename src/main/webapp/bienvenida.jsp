@@ -3,7 +3,7 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Bienvenido - Peace at Home</title>
+    <title>Bienvenido - Urent</title>
     <style>
         body { font-family: Arial, sans-serif; text-align: center; margin-top: 50px; }
         .card { display: inline-block; padding: 20px 40px; border: 1px solid #ddd; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
@@ -12,7 +12,7 @@
 </head>
 <body>
     <div class="card">
-        <h1>¡Bienvenido a Peace at Home!</h1>
+        <h1>¡Bienvenido a Urent!</h1>
         <p>Has iniciado sesión exitosamente con el correo:</p>
         <h3><%= session.getAttribute("usuarioLogueado") %></h3>
         <br>

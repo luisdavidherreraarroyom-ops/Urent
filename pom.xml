@@ -6,7 +6,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.peaceathome</groupId>
-    <artifactId>Peace_at_Home</artifactId>
+    <artifactId>Urent</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>war</packaging>
 

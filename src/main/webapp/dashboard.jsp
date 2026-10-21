@@ -48,7 +48,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Peace at Home - Panel Principal</title>
+    <title>Urent - Panel Principal</title>
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif; }
         body { background-color: #f4f7f6; color: #333; min-height: 100vh; }
@@ -98,8 +98,8 @@
 
     <main class="container">
         <section class="welcome-card">
-            <h2>¡Bienvenido a PeaceAtHome!</h2>
-            <p>Has iniciado sesión correctamente como <strong><%= usuario %></strong> en el sistema de gestión <strong>Peace at Home</strong>.</p>
+            <h2>¡Bienvenido a Urent!</h2>
+            <p>Has iniciado sesión correctamente como <strong><%= usuario %></strong> en el sistema de gestión <strong>Urent</strong>.</p>
         </section>
 
         <section class="grid">
