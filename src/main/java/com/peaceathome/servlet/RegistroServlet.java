@@ -62,7 +62,7 @@ public class RegistroServlet extends HttpServlet {
         nuevoUsuario.setCorreo(correo);
         nuevoUsuario.setContrasena(contrasena); // el DAO se encarga de hashearla
         nuevoUsuario.setTelefono(telefono);
-        nuevoUsuario.setRol("cliente");
+        nuevoUsuario.setRol("estudiante");
 
         boolean registroExitoso = usuarioDAO.registrarUsuario(nuevoUsuario);
 
