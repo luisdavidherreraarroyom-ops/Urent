@@ -1,5 +1,5 @@
-$env:JAVA_HOME     = "C:\Program Files\Java\jdk-25.0.2"
-$env:CATALINA_HOME = "C:\apache-tomcat-9.0.121"
+if (-not $env:JAVA_HOME)     { $env:JAVA_HOME     = "C:\Program Files\Java\jdk-25.0.2" }
+if (-not $env:CATALINA_HOME) { $env:CATALINA_HOME = "C:\apache-tomcat-9.0.121" }
 $tomcatBin = "$env:CATALINA_HOME\bin"
 $webapps   = "$env:CATALINA_HOME\webapps"
 
