@@ -41,6 +41,65 @@ public class UsuarioDAO {
     }
 
     /**
+     * Valida las credenciales y devuelve el usuario completo (con su rol).
+     * @param correo El correo que el usuario digita
+     * @param contrasenaIngresada La clave en texto plano que el usuario digita
+     * @return el Usuario (sin la contraseña) si las credenciales son correctas, o null si no
+     */
+    public Usuario autenticar(String correo, String contrasenaIngresada) {
+        if (correo == null || correo.isEmpty()
+                || contrasenaIngresada == null || contrasenaIngresada.isEmpty()) {
+            return null;
+        }
+
+        String sql = "SELECT id_usuario, nombre, correo, contrasena, rol, telefono "
+                   + "FROM dbo.Usuario WHERE correo = ?";
+
+        try (Connection con = Conexion.conectar()) {
+
+            if (con == null) {
+                System.err.println("❌ No hay conexión a la base de datos (revisa las variables de entorno).");
+                return null;
+            }
+
+            try (PreparedStatement ps = con.prepareStatement(sql)) {
+                ps.setString(1, correo);
+
+                try (ResultSet rs = ps.executeQuery()) {
+                    if (rs.next()) {
+                        String hash = rs.getString("contrasena");
+
+                        boolean coincide;
+                        try {
+                            coincide = BCrypt.checkpw(contrasenaIngresada, hash);
+                        } catch (IllegalArgumentException e) {
+                            // Contraseña guardada sin hash BCrypt válido
+                            System.err.println("❌ El usuario tiene una contraseña sin formato BCrypt válido.");
+                            return null;
+                        }
+
+                        if (coincide) {
+                            Usuario u = new Usuario();
+                            u.setIdUsuario(rs.getInt("id_usuario"));
+                            u.setNombre(rs.getString("nombre"));
+                            u.setCorreo(rs.getString("correo"));
+                            u.setRol(rs.getString("rol"));
+                            u.setTelefono(rs.getString("telefono"));
+                            return u; // la contraseña NO se devuelve
+                        }
+                    }
+                }
+            }
+
+        } catch (SQLException e) {
+            System.err.println("❌ Error al autenticar al usuario.");
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    /**
      * Verifica si ya existe un usuario registrado con ese correo.
      * @param correo El correo a verificar
      * @return true si el correo ya está registrado, false si está libre
