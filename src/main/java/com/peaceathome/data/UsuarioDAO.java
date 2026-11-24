@@ -8,6 +8,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.sql.Types;
 
 public class UsuarioDAO {
 
@@ -125,27 +127,83 @@ public class UsuarioDAO {
     }
 
     /**
-     * Inserta un nuevo usuario en la base de datos, hasheando la contraseña con BCrypt.
+     * Inserta un nuevo usuario con su perfil, hasheando la contraseña con BCrypt.
+     * Si el rol es "vendedor", crea también su fila en Agente (todo en una transacción).
      * @param usuario Objeto Usuario con los datos ingresados (contrasena en texto plano)
      * @return true si el registro fue exitoso, false si hubo error
      */
     public boolean registrarUsuario(Usuario usuario) {
-        String sql = "INSERT INTO dbo.Usuario (nombre, correo, contrasena, rol, telefono) VALUES (?, ?, ?, ?, ?)";
+        String sqlUsuario = "INSERT INTO dbo.Usuario "
+                + "(nombre, correo, contrasena, rol, telefono, id_universidad, carrera, semestre) "
+                + "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        String sqlAgente = "INSERT INTO dbo.Agente (id_usuario) VALUES (?)";
 
         // Nunca guardamos la contraseña en texto plano
         String hash = BCrypt.hashpw(usuario.getContrasena(), BCrypt.gensalt());
 
-        try (Connection con = Conexion.conectar();
-             PreparedStatement ps = con.prepareStatement(sql)) {
+        try (Connection con = Conexion.conectar()) {
 
-            ps.setString(1, usuario.getNombre());
-            ps.setString(2, usuario.getCorreo());
-            ps.setString(3, hash);
-            ps.setString(4, usuario.getRol());
-            ps.setString(5, usuario.getTelefono());
+            if (con == null) {
+                System.err.println("❌ No hay conexión a la base de datos (revisa las variables de entorno).");
+                return false;
+            }
 
-            int filasAfectadas = ps.executeUpdate();
-            return filasAfectadas > 0;
+            con.setAutoCommit(false);
+
+            try (PreparedStatement ps = con.prepareStatement(sqlUsuario, Statement.RETURN_GENERATED_KEYS)) {
+                ps.setString(1, usuario.getNombre());
+                ps.setString(2, usuario.getCorreo());
+                ps.setString(3, hash);
+                ps.setString(4, usuario.getRol());
+                ps.setString(5, usuario.getTelefono());
+
+                if (usuario.getIdUniversidad() != null) {
+                    ps.setInt(6, usuario.getIdUniversidad());
+                } else {
+                    ps.setNull(6, Types.INTEGER);
+                }
+                if (usuario.getCarrera() != null) {
+                    ps.setString(7, usuario.getCarrera());
+                } else {
+                    ps.setNull(7, Types.VARCHAR);
+                }
+                if (usuario.getSemestre() != null) {
+                    ps.setInt(8, usuario.getSemestre());
+                } else {
+                    ps.setNull(8, Types.TINYINT);
+                }
+
+                if (ps.executeUpdate() == 0) {
+                    con.rollback();
+                    return false;
+                }
+
+                int idNuevo = 0;
+                try (ResultSet claves = ps.getGeneratedKeys()) {
+                    if (claves.next()) {
+                        idNuevo = claves.getInt(1);
+                    }
+                }
+
+                // El vendedor necesita una fila en Agente para poder publicar propiedades
+                if ("vendedor".equals(usuario.getRol())) {
+                    if (idNuevo == 0) {
+                        con.rollback();
+                        return false;
+                    }
+                    try (PreparedStatement psAgente = con.prepareStatement(sqlAgente)) {
+                        psAgente.setInt(1, idNuevo);
+                        psAgente.executeUpdate();
+                    }
+                }
+
+                con.commit();
+                return true;
+
+            } catch (SQLException e) {
+                con.rollback();
+                throw e;
+            }
 
         } catch (SQLException e) {
             System.err.println("❌ Error al registrar el usuario en la base de datos.");

@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Urent - Iniciar Sesión</title>
+    <title>Urent - Iniciar sesión</title>
 
     <style>
         * {
@@ -15,133 +15,159 @@
         }
 
         body {
+            min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 100vh;
-            padding: 20px;
-            background-color: #f4f7f6;
+            padding: 2rem 1rem;
+            background: #f4f7f6;
+            color: #333;
         }
 
         .login-card {
-            background: #ffffff;
-            padding: 2.5rem;
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
             width: 100%;
-            max-width: 400px;
+            max-width: 420px;
+            padding: 2.5rem;
+            background: white;
+            border-radius: 14px;
+            box-shadow: 0 5px 20px rgba(0,0,0,.10);
         }
 
-        .login-card h2 {
+        .logo {
+            display: block;
+            width: 100px;
+            height: auto;
+            margin: 0 auto 1rem;
+        }
+
+        h1 {
             text-align: center;
             color: #2c3e50;
+            margin-bottom: .5rem;
+        }
+
+        .subtitulo {
+            text-align: center;
+            color: #777;
+            font-size: .9rem;
             margin-bottom: 1.5rem;
-            font-weight: 600;
         }
 
         .form-group {
             margin-bottom: 1.2rem;
         }
 
-        .form-group label {
+        label {
             display: block;
-            margin-bottom: 0.5rem;
+            margin-bottom: .5rem;
+            font-size: .9rem;
+            font-weight: 600;
             color: #555;
-            font-size: 0.9rem;
         }
 
-        .form-group input {
+        input {
             width: 100%;
-            padding: 0.75rem;
+            padding: .8rem;
             border: 1px solid #ccc;
-            border-radius: 6px;
+            border-radius: 7px;
             font-size: 1rem;
             outline: none;
-            transition: border-color 0.2s;
         }
 
-        .form-group input:focus {
+        input:focus {
             border-color: #007bff;
+            box-shadow: 0 0 0 2px rgba(0,123,255,.12);
         }
 
-        .btn-submit {
+        button {
             width: 100%;
-            padding: 0.75rem;
-            background-color: #007bff;
+            padding: .85rem;
             border: none;
-            border-radius: 6px;
+            border-radius: 7px;
+            background: #007bff;
             color: white;
             font-size: 1rem;
             font-weight: bold;
             cursor: pointer;
-            transition: background-color 0.2s;
         }
 
-        .btn-submit:hover {
-            background-color: #0056b3;
+        button:hover {
+            background: #0056b3;
         }
 
         .mensaje {
-            padding: 0.75rem;
-            border-radius: 6px;
-            margin-bottom: 1.2rem;
-            font-size: 0.9rem;
             display: none;
-        }
-
-        .mensaje-error {
-            background-color: #fdecea;
-            color: #b71c1c;
+            padding: .8rem;
+            border-radius: 7px;
+            margin-bottom: 1.2rem;
+            font-size: .9rem;
         }
 
         .mensaje-exito {
-            background-color: #e8f5e9;
+            display: none;
+            background: #e8f5e9;
             color: #1b5e20;
         }
 
-        .mensaje-info {
-            background-color: #e7f1fb;
-            color: #0b4a8f;
+        .mensaje-error {
+            display: none;
+            background: #fdecea;
+            color: #b71c1c;
         }
 
-        .link-login {
+        .registro {
             text-align: center;
-            margin-top: 1.2rem;
-            font-size: 0.9rem;
+            margin-top: 1.5rem;
+            font-size: .9rem;
             color: #555;
         }
 
-        .link-login a {
+        .registro a {
             color: #007bff;
-            text-decoration: none;
             font-weight: 600;
+            text-decoration: none;
         }
 
-        .link-login a:hover {
+        .registro a:hover {
             text-decoration: underline;
+        }
+
+        @media (max-width: 480px) {
+            .login-card {
+                padding: 1.5rem;
+            }
         }
     </style>
 </head>
 
 <body>
 
-    <div class="login-card">
+    <main class="login-card">
 
-        <h2>Urent</h2>
+        <img src="images/logo-urent.png" alt="Urent" class="logo">
 
-        <div id="mensaje" class="mensaje" role="alert"></div>
+        <h1>Bienvenido a Urent</h1>
 
-        <form action="login" method="POST">
+        <p class="subtitulo">
+            Inicia sesión para continuar
+        </p>
+
+        <div id="mensaje-exito" class="mensaje mensaje-exito" role="status">
+            ¡Registro exitoso! Ya puedes iniciar sesión.
+        </div>
+
+        <div id="mensaje-error" class="mensaje mensaje-error" role="alert"></div>
+
+        <form action="login" method="POST" id="formLogin">
 
             <div class="form-group">
-                <label for="email">Correo Electrónico</label>
+                <label for="email">Correo electrónico</label>
                 <input
                     type="email"
                     id="email"
                     name="email"
                     required
-                    placeholder="ejemplo@correo.com"
-                >
+                    placeholder="ejemplo@correo.com">
             </div>
 
             <div class="form-group">
@@ -151,55 +177,43 @@
                     id="password"
                     name="password"
                     required
-                    placeholder="••••••••"
-                >
+                    placeholder="Tu contraseña">
             </div>
 
-            <button type="submit" class="btn-submit">
-                Iniciar Sesión
-            </button>
+            <button type="submit">Iniciar sesión</button>
 
         </form>
 
-        <p class="link-login">
-            ¿No tienes cuenta?
+        <p class="registro">
+            ¿No tienes una cuenta?
             <a href="registro.html">Regístrate aquí</a>
         </p>
 
-    </div>
+    </main>
 
     <script>
         const params = new URLSearchParams(window.location.search);
 
+        const mensajeExito = document.getElementById('mensaje-exito');
+        const mensajeError = document.getElementById('mensaje-error');
+
+        if (params.get('registro') === 'exitoso') {
+            mensajeExito.style.display = 'block';
+        }
+
+        const errores = {
+            invalid_credentials: 'Correo o contraseña incorrectos.',
+            campos_vacios: 'Por favor completa todos los campos.',
+            error_servidor: 'Ocurrió un error. Intenta nuevamente.'
+        };
+
         const error = params.get('error');
-        const registro = params.get('registro');
 
-        const mensajeDiv = document.getElementById('mensaje');
+        if (error) {
+            mensajeError.textContent =
+                errores[error] || 'Ocurrió un error inesperado.';
 
-        if (error === 'invalid_credentials') {
-
-            mensajeDiv.textContent = 'Correo o contraseña incorrectos.';
-            mensajeDiv.classList.add('mensaje-error');
-            mensajeDiv.style.display = 'block';
-
-        } else if (error === 'sesion_expirada') {
-
-            mensajeDiv.textContent = 'Tu sesión terminó. Inicia sesión de nuevo.';
-            mensajeDiv.classList.add('mensaje-info');
-            mensajeDiv.style.display = 'block';
-
-        } else if (error === 'sin_permiso') {
-
-            mensajeDiv.textContent = 'No tienes permiso para entrar a esa página.';
-            mensajeDiv.classList.add('mensaje-error');
-            mensajeDiv.style.display = 'block';
-
-        } else if (registro === 'exitoso') {
-
-            mensajeDiv.textContent = '¡Cuenta creada correctamente! Ya puedes iniciar sesión.';
-            mensajeDiv.classList.add('mensaje-exito');
-            mensajeDiv.style.display = 'block';
-
+            mensajeError.style.display = 'block';
         }
     </script>
 
