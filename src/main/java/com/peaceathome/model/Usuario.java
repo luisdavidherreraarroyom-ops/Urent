@@ -8,6 +8,11 @@ public class Usuario {
     private String rol;
     private String telefono;
 
+    // Perfil de estudiante (pueden ser null para vendedor y administrador)
+    private Integer idUniversidad;
+    private String carrera;
+    private Integer semestre;
+
     public Usuario() {}
 
     public Usuario(int idUsuario, String nombre, String correo, String contrasena, String rol, String telefono) {
@@ -36,4 +41,13 @@ public class Usuario {
 
     public String getTelefono() { return telefono; }
     public void setTelefono(String telefono) { this.telefono = telefono; }
+
+    public Integer getIdUniversidad() { return idUniversidad; }
+    public void setIdUniversidad(Integer idUniversidad) { this.idUniversidad = idUniversidad; }
+
+    public String getCarrera() { return carrera; }
+    public void setCarrera(String carrera) { this.carrera = carrera; }
+
+    public Integer getSemestre() { return semestre; }
+    public void setSemestre(Integer semestre) { this.semestre = semestre; }
 }

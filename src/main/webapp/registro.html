@@ -1,85 +1,622 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Urent - Crear cuenta</title>
+
     <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-        body { display: flex; justify-content: center; align-items: center; min-height: 100vh; background-color: #f4f7f6; padding: 2rem 0; }
-        .login-card { background: #ffffff; padding: 2.5rem; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); width: 100%; max-width: 400px; }
-        .login-card h2 { text-align: center; color: #2c3e50; margin-bottom: 0.5rem; font-weight: 600; }
-        .login-card .subtitulo { text-align: center; color: #888; font-size: 0.85rem; margin-bottom: 1.5rem; }
-        .form-group { margin-bottom: 1.2rem; }
-        .form-group label { display: block; margin-bottom: 0.5rem; color: #555; font-size: 0.9rem; }
-        .form-group input { width: 100%; padding: 0.75rem; border: 1px solid #ccc; border-radius: 6px; font-size: 1rem; outline: none; transition: border-color 0.2s; }
-        .form-group input:focus { border-color: #007bff; }
-        .form-group .ayuda { font-size: 0.78rem; color: #999; margin-top: 0.3rem; }
-        .btn-submit { width: 100%; padding: 0.75rem; background-color: #007bff; border: none; border-radius: 6px; color: white; font-size: 1rem; font-weight: bold; cursor: pointer; transition: background-color 0.2s; margin-top: 0.5rem; }
-        .btn-submit:hover { background-color: #0056b3; }
-        .mensaje { padding: 0.75rem; border-radius: 6px; margin-bottom: 1.2rem; font-size: 0.9rem; display: none; }
-        .mensaje-error { background-color: #fdecea; color: #b71c1c; }
-        .link-login { text-align: center; margin-top: 1.2rem; font-size: 0.9rem; color: #555; }
-        .link-login a { color: #007bff; text-decoration: none; font-weight: 600; }
-        .link-login a:hover { text-decoration: underline; }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #f4f7f6;
+            padding: 2rem 1rem;
+        }
+
+        .login-card {
+            background: #ffffff;
+            padding: 2.5rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 450px;
+        }
+
+        .login-card h2 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .subtitulo {
+            text-align: center;
+            color: #666;
+            font-size: 0.85rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.2rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #555;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.2s;
+            background: #ffffff;
+            color: #333;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            border-color: #007bff;
+            box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.1);
+        }
+
+        .form-group .ayuda {
+            font-size: 0.78rem;
+            color: #666;
+            margin-top: 0.3rem;
+        }
+
+        .btn-submit {
+            width: 100%;
+            padding: 0.75rem;
+            background-color: #007bff;
+            border: none;
+            border-radius: 6px;
+            color: white;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            margin-top: 0.5rem;
+        }
+
+        .btn-submit:hover {
+            background-color: #0056b3;
+        }
+
+        .btn-submit:disabled {
+            background-color: #8bb8e8;
+            cursor: not-allowed;
+        }
+
+        .mensaje {
+            padding: 0.75rem;
+            border-radius: 6px;
+            margin-bottom: 1.2rem;
+            font-size: 0.9rem;
+            display: none;
+        }
+
+        .mensaje-error {
+            background-color: #fdecea;
+            color: #b71c1c;
+        }
+
+        .link-login {
+            text-align: center;
+            margin-top: 1.2rem;
+            font-size: 0.9rem;
+            color: #555;
+        }
+
+        .link-login a {
+            color: #007bff;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .link-login a:hover {
+            text-decoration: underline;
+        }
+
+        #camposEstudiante {
+            display: block;
+        }
+
+        @media (max-width: 480px) {
+            .login-card {
+                padding: 1.5rem;
+            }
+        }
     </style>
 </head>
+
 <body>
-    <div class="login-card">
+
+    <main class="login-card">
+
         <h2>Urent</h2>
-        <p class="subtitulo">Crea tu cuenta para comenzar</p>
 
-        <div id="mensaje-error" class="mensaje mensaje-error"></div>
+        <p class="subtitulo">
+            Crea tu cuenta para comenzar
+        </p>
 
-        <form action="registro" method="post">
+        <div
+            id="mensaje-error"
+            class="mensaje mensaje-error"
+            role="alert"
+            aria-live="polite">
+        </div>
+
+        <form action="registro" method="POST" id="formRegistro">
+
+            <!-- TIPO DE CUENTA -->
+
+            <div class="form-group">
+                <label for="tipoCuenta">Tipo de cuenta</label>
+
+                <select id="tipoCuenta" name="tipoCuenta" required>
+                    <option value="estudiante" selected>
+                        Estudiante (busco alojamiento)
+                    </option>
+
+                    <option value="vendedor">
+                        Propietario o agente (ofrezco alojamiento)
+                    </option>
+                </select>
+            </div>
+
+            <!-- NOMBRE -->
+
             <div class="form-group">
                 <label for="nombre">Nombre completo</label>
-                <input type="text" id="nombre" name="nombre" required placeholder="Ej: Luis Arias">
+
+                <input
+                    type="text"
+                    id="nombre"
+                    name="nombre"
+                    required
+                    maxlength="100"
+                    placeholder="Ej: Luis Arias">
             </div>
+
+            <!-- CAMPOS EXCLUSIVOS DEL ESTUDIANTE -->
+
+            <div id="camposEstudiante">
+
+                <div class="form-group">
+                    <label for="universidad">Universidad</label>
+
+                    <select
+                        id="universidad"
+                        name="universidad"
+                        required>
+
+                        <option value="">
+                            Selecciona tu universidad
+                        </option>
+
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="carrera">Carrera</label>
+
+                    <input
+                        type="text"
+                        id="carrera"
+                        name="carrera"
+                        required
+                        maxlength="100"
+                        placeholder="Ej: Ingeniería de Sistemas">
+                </div>
+
+                <div class="form-group">
+                    <label for="semestre">Semestre</label>
+
+                    <select
+                        id="semestre"
+                        name="semestre"
+                        required>
+
+                        <option value="">
+                            Selecciona tu semestre
+                        </option>
+
+                    </select>
+                </div>
+
+            </div>
+
+            <!-- CORREO -->
 
             <div class="form-group">
                 <label for="correo">Correo electrónico</label>
-                <input type="email" id="correo" name="correo" required placeholder="ejemplo@correo.com">
+
+                <input
+                    type="email"
+                    id="correo"
+                    name="correo"
+                    required
+                    maxlength="100"
+                    placeholder="ejemplo@correo.com">
+
+                <div class="ayuda" id="ayudaCorreo">
+                    Usa tu correo institucional.
+                </div>
             </div>
+
+            <!-- TELEFONO -->
 
             <div class="form-group">
                 <label for="telefono">Teléfono</label>
-                <input type="tel" id="telefono" name="telefono" required placeholder="300 123 4567">
+
+                <input
+                    type="tel"
+                    id="telefono"
+                    name="telefono"
+                    required
+                    maxlength="20"
+                    placeholder="300 123 4567">
             </div>
+
+            <!-- CONTRASEÑA -->
 
             <div class="form-group">
                 <label for="contrasena">Contraseña</label>
-                <input type="password" id="contrasena" name="contrasena" required minlength="6" placeholder="••••••••">
-                <div class="ayuda">Mínimo 6 caracteres</div>
+
+                <input
+                    type="password"
+                    id="contrasena"
+                    name="contrasena"
+                    required
+                    minlength="6"
+                    placeholder="••••••••">
+
+                <div class="ayuda">
+                    Mínimo 6 caracteres.
+                </div>
             </div>
+
+            <!-- CONFIRMAR CONTRASEÑA -->
 
             <div class="form-group">
-                <label for="confirmarContrasena">Confirmar contraseña</label>
-                <input type="password" id="confirmarContrasena" name="confirmarContrasena" required minlength="6" placeholder="••••••••">
+                <label for="confirmarContrasena">
+                    Confirmar contraseña
+                </label>
+
+                <input
+                    type="password"
+                    id="confirmarContrasena"
+                    name="confirmarContrasena"
+                    required
+                    minlength="6"
+                    placeholder="••••••••">
             </div>
 
-            <button type="submit" class="btn-submit">Registrarme</button>
+            <button type="submit" class="btn-submit">
+                Registrarme
+            </button>
+
         </form>
 
-        <p class="link-login">¿Ya tienes cuenta? <a href="index.html">Inicia sesión aquí</a></p>
-    </div>
+        <p class="link-login">
+            ¿Ya tienes cuenta?
+            <a href="index.html">Inicia sesión aquí</a>
+        </p>
+
+    </main>
 
     <script>
+
+        // ==========================================
+        // MENSAJES DE ERROR DEL SERVIDOR
+        // ==========================================
+
         const params = new URLSearchParams(window.location.search);
         const error = params.get('error');
 
-        if (error) {
-            const mensajes = {
-                'campos_vacios': 'Por favor completa todos los campos.',
-                'contrasenas_no_coinciden': 'Las contraseñas no coinciden.',
-                'correo_existente': 'Ese correo ya está registrado. Intenta iniciar sesión.',
-                'error_servidor': 'Ocurrió un error al registrar. Intenta de nuevo.'
-            };
+        const mensajes = {
+            'campos_vacios':
+                'Por favor completa todos los campos.',
 
-            const mensajeDiv = document.getElementById('mensaje-error');
-            mensajeDiv.textContent = mensajes[error] || 'Ocurrió un error inesperado.';
+            'contrasenas_no_coinciden':
+                'Las contraseñas no coinciden.',
+
+            'correo_existente':
+                'Ese correo ya está registrado. Intenta iniciar sesión.',
+
+            'correo_invalido':
+                'Escribe un correo electrónico válido.',
+
+            'contrasena_corta':
+                'La contraseña debe tener al menos 6 caracteres.',
+
+            'tipo_invalido':
+                'Elige un tipo de cuenta válido.',
+
+            'universidad_invalida':
+                'Elige una universidad de la lista.',
+
+            'semestre_invalido':
+                'El semestre debe estar entre 1 y 12.',
+
+            'correo_no_institucional':
+                'El correo debe ser el institucional de la universidad que elegiste.',
+
+            'datos_invalidos':
+                'Alguno de los datos es demasiado largo. Revísalos.',
+
+            'error_servidor':
+                'Ocurrió un error al registrar. Intenta de nuevo.'
+        };
+
+        if (error) {
+            const mensajeDiv =
+                document.getElementById('mensaje-error');
+
+            mensajeDiv.textContent =
+                mensajes[error] || 'Ocurrió un error inesperado.';
+
             mensajeDiv.style.display = 'block';
         }
+
+
+        // ==========================================
+        // REFERENCIAS DEL FORMULARIO
+        // ==========================================
+
+        const formulario = document.getElementById('formRegistro');
+
+        const tipoCuenta = document.getElementById('tipoCuenta');
+        const camposEstudiante =
+            document.getElementById('camposEstudiante');
+
+        const universidad = document.getElementById('universidad');
+        const carrera = document.getElementById('carrera');
+        const semestre = document.getElementById('semestre');
+
+        const correo = document.getElementById('correo');
+        const ayudaCorreo = document.getElementById('ayudaCorreo');
+
+        const contrasena = document.getElementById('contrasena');
+        const confirmarContrasena =
+            document.getElementById('confirmarContrasena');
+
+        let universidades = [];
+
+
+        // ==========================================
+        // GENERAR SEMESTRES DEL 1 AL 12
+        // ==========================================
+
+        for (let n = 1; n <= 12; n++) {
+
+            const opcion = document.createElement('option');
+
+            opcion.value = n;
+            opcion.textContent = n;
+
+            semestre.appendChild(opcion);
+        }
+
+
+        // ==========================================
+        // ACTUALIZAR AYUDA DEL CORREO
+        // ==========================================
+
+        function actualizarAyudaCorreo() {
+
+            if (tipoCuenta.value !== 'estudiante') {
+
+                ayudaCorreo.textContent =
+                    'Usa el correo que prefieras para tu cuenta.';
+
+                return;
+            }
+
+            const elegida = universidades.find(function (u) {
+                return String(u.id) === universidad.value;
+            });
+
+            ayudaCorreo.textContent = elegida
+                ? 'Tu correo debe terminar en @' + elegida.dominio
+                : 'Usa tu correo institucional.';
+        }
+
+
+        // ==========================================
+        // CAMBIAR CAMPOS SEGÚN TIPO DE CUENTA
+        // ==========================================
+
+        function actualizarTipo() {
+
+            const esEstudiante =
+                tipoCuenta.value === 'estudiante';
+
+            camposEstudiante.style.display =
+                esEstudiante ? 'block' : 'none';
+
+            [universidad, carrera, semestre].forEach(function (campo) {
+
+                campo.required = esEstudiante;
+                campo.disabled = !esEstudiante;
+
+            });
+
+            actualizarAyudaCorreo();
+        }
+
+        tipoCuenta.addEventListener('change', actualizarTipo);
+
+        universidad.addEventListener('change', actualizarAyudaCorreo);
+
+
+        // ==========================================
+        // CARGAR UNIVERSIDADES DESDE EL SERVIDOR
+        // ==========================================
+
+        fetch('universidades')
+
+            .then(function (respuesta) {
+
+                if (!respuesta.ok) {
+                    throw new Error('No se pudo cargar la lista.');
+                }
+
+                return respuesta.json();
+
+            })
+
+            .then(function (lista) {
+
+                if (!Array.isArray(lista)) {
+                    throw new Error('Formato de universidades inválido.');
+                }
+
+                universidades = lista;
+
+                lista.forEach(function (u) {
+
+                    const opcion = document.createElement('option');
+
+                    opcion.value = u.id;
+                    opcion.textContent = u.nombre;
+
+                    universidad.appendChild(opcion);
+
+                });
+
+                actualizarAyudaCorreo();
+
+            })
+
+            .catch(function () {
+
+                universidad.innerHTML = '';
+
+                const opcion = document.createElement('option');
+
+                opcion.value = '';
+                opcion.textContent = 'No se pudo cargar la lista';
+
+                universidad.appendChild(opcion);
+
+                universidades = [];
+
+            });
+
+
+        // ==========================================
+        // VALIDAR CORREO INSTITUCIONAL
+        // ==========================================
+
+        function correoInstitucionalValido() {
+
+            if (tipoCuenta.value !== 'estudiante') {
+                return true;
+            }
+
+            const elegida = universidades.find(function (u) {
+                return String(u.id) === universidad.value;
+            });
+
+            if (!elegida || !elegida.dominio) {
+                return false;
+            }
+
+            const dominioCorreo =
+                correo.value.trim().toLowerCase().split('@')[1];
+
+            const dominioUniversidad =
+                String(elegida.dominio).trim().toLowerCase();
+
+            return dominioCorreo === dominioUniversidad ||
+                dominioCorreo.endsWith('.' + dominioUniversidad);
+        }
+
+
+        // ==========================================
+        // VALIDAR FORMULARIO ANTES DE ENVIAR
+        // ==========================================
+
+        formulario.addEventListener('submit', function (event) {
+
+            const mensajeDiv =
+                document.getElementById('mensaje-error');
+
+            mensajeDiv.style.display = 'none';
+            mensajeDiv.textContent = '';
+
+            if (contrasena.value !== confirmarContrasena.value) {
+
+                event.preventDefault();
+
+                mensajeDiv.textContent =
+                    'Las contraseñas no coinciden.';
+
+                mensajeDiv.style.display = 'block';
+
+                confirmarContrasena.focus();
+
+                return;
+            }
+
+            if (contrasena.value.length < 6) {
+
+                event.preventDefault();
+
+                mensajeDiv.textContent =
+                    'La contraseña debe tener al menos 6 caracteres.';
+
+                mensajeDiv.style.display = 'block';
+
+                contrasena.focus();
+
+                return;
+            }
+
+            if (!correoInstitucionalValido()) {
+
+                event.preventDefault();
+
+                mensajeDiv.textContent =
+                    'El correo debe corresponder al dominio institucional de la universidad seleccionada.';
+
+                mensajeDiv.style.display = 'block';
+
+                correo.focus();
+
+                return;
+            }
+
+        });
+
+
+        // ==========================================
+        // INICIALIZAR FORMULARIO
+        // ==========================================
+
+        actualizarTipo();
+
     </script>
+
 </body>
 </html>
