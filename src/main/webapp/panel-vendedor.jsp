@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Urent - Panel de vendedor</title>
+    <title>Urent - Panel de Arrendatario</title>
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
         body { display: flex; justify-content: center; align-items: center; min-height: 100vh; background-color: #f4f7f6; padding: 1rem; }
@@ -17,7 +17,7 @@
 </head>
 <body>
     <div class="tarjeta">
-        <h1>Panel de vendedor</h1>
+        <h1>Panel de Arrendatario</h1>
         <p>Estamos construyendo esta sección. Pronto podrás publicar y administrar tus alojamientos.</p>
         <a class="btn-salir" href="logout">Cerrar Sesión</a>
     </div>
